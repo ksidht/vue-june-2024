@@ -1,10 +1,11 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, watchEffect } from "vue";
   const count = defineModel('count')
   const title = defineModel('title')
   const props = defineProps(['modalValue'])
   const emit = defineEmits(['update:modelValue'])
-
+  // const API_URL = 'http://localhost:8000'
+  const API_URL = 'https://dev-india-company-admin-api.gpssapp.com'
 
   console.log(props)
   
@@ -17,6 +18,20 @@
   function updateSecond() {
     title.value++
   }
+
+  watchEffect(async () => {
+  // this effect will run immediately and then
+  // re-run whenever currentBranch.value changes
+  const url = `${API_URL}/api/user/get-user-id`
+  const data = await (await fetch(url, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })).json()
+
+  console.log(data)
+})  
 
 </script>
 <template>
