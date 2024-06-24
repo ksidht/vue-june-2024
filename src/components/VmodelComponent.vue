@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, watchEffect } from "vue";
+  import { onMounted, ref, watchEffect } from "vue";
   const count = defineModel('count')
   const title = defineModel('title')
   const props = defineProps(['modalValue'])
@@ -20,6 +20,7 @@
   }
 
   watchEffect(async () => {
+    console.log(`the component is in watchEffect.`)
   // this effect will run immediately and then
   // re-run whenever currentBranch.value changes
   const url = `${API_URL}/api/user/get-user-id`
@@ -32,6 +33,11 @@
 
   console.log(data)
 })  
+
+onMounted(() => {
+  console.log(`the component is in mounted.`)
+})
+
 
 </script>
 <template>
